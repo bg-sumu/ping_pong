@@ -40,14 +40,15 @@ const net = {
 }
 
 function drawNet() {
-    for (let i = 0; i <= cvs.height; i += 15) {
+    for (let i = 0; i <= cvs.height; i += 15) 
+    {
         drawrec(net.x, net.y + i, net.width, net.height, net.color)
-
     }
 
 }
 //draw circle
-function drawcir(x, y, r, color) {
+function drawcir(x, y, r, color) 
+{
     ctx.fillStyle = color
     ctx.beginPath()
     ctx.arc(x, y, r, Math.PI * 2, false)
@@ -56,13 +57,15 @@ function drawcir(x, y, r, color) {
 }
 
 // draw text
-function drawText(text, x, y, color) {
+function drawText(text, x, y, color) 
+{
     ctx.fillStyle = color
     ctx.font = "45px fantasy"
     ctx.fillText(text, x, y)
 }
 
-function render() {
+function render() 
+{
     // canvas
     drawrec(0, 0, cvs.width, cvs.height, "black")
         // net
@@ -80,14 +83,14 @@ function render() {
 
 cvs.addEventListener("mousemove", movepaddle)
 
-function movepaddle(evt) {
+function movepaddle(evt) 
+{
     let rect = cvs.getBoundingClientRect();
     user.y = evt.clientY - rect.top - user.height / 2
-
-
 }
 
-function collision(b, p) {
+function collision(b, p) 
+{
     b.top = b.y - b.radius
     b.bottom = b.y + b.radius
     b.right = b.x + b.radius
@@ -97,35 +100,38 @@ function collision(b, p) {
     p.bottom = p.y + p.height
     p.left = p.x
     p.right = p.x + p.width
+
     return b.left < p.right && b.top < p.bottom && b.right > p.left && b.bottom > p.top
 }
 
 
 
 // reset ball
-function reset() {
+function reset() 
+{
     ball.x = cvs.width / 2
     ball.y = cvs.height / 2
     ball.speed = 5
     ball.velocityx = -ball.velocityx
-
 }
 
-function update() {
+function update() 
+{
     ball.x += ball.velocityx
     ball.y += ball.velocityY
         //simple ai
     let computerlevel = 0.1
     com.y += (ball.y - (com.y + com.height / 2)) * computerlevel
 
-    if (ball.y + ball.radius > cvs.height || ball.y - ball.radius < 0) {
+    if (ball.y + ball.radius > cvs.height || ball.y - ball.radius < 0) 
+    {
         ball.velocityY = -ball.velocityY
-
     }
 
     let player = (ball.x < cvs.width / 2) ? user : com
 
-    if (collision(ball, player)) {
+    if (collision(ball, player)) 
+    {
         let collidepoint = ball.y - (player.y + player.height / 2)
         collidepoint = collidepoint / (player.height / 2)
         let anglerad = collidepoint * Math.PI / 4
@@ -133,20 +139,23 @@ function update() {
         ball.velocityx = direction * ball.speed * Math.cos(anglerad)
         ball.velocityY = ball.speed * Math.sin(anglerad)
         ball.speed += 0.5
-
     }
 
-    if (ball.x - ball.radius < 0) {
+    if (ball.x - ball.radius < 0) 
+    {
         com.score++;
         reset();
-    } else if (ball.x + ball.radius > cvs.width) {
+    } 
+    else if (ball.x + ball.radius > cvs.width) 
+    {
         user.score++;
         reset();
     }
 
 }
 
-function game() {
+function game() 
+{
     render()
     update()
 }
